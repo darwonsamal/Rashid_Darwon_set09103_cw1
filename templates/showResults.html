@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="projects-clean" style="background-color:rgb(6,6,6);">
+    <div class="container">
+
+        {% if artist|length != 0 %}
+        <div class="intro">
+          <h2 class="text-center" style="color:yellow;">Artist Results</h2>
+
+        </div>
+        {%endif%}
+        <div class="row projects" style="color:Yellow;">
+          {%for x in artist%}
+
+            <div class="col-sm-6 col-lg-4 item"><img class="img-fluid img-style" src="../static/images/rza/rza2.jpg">
+                <h3 class="name">{{x.name}}</h3>
+                <p class="description" style="color:white;">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
+            </div>
+            {% endfor %}
+
+
+
+
+        </div>
+
+        {% if albums|length != 0 %}
+        <div class="intro">
+          <h2 class="text-center" style="color:yellow;">Album Results</h2>
+        </div>
+        {%endif%}
+
+        <div class="row projects" style="color:Yellow;">
+            {%for x in albums%}
+              <div class="col-sm-6 col-lg-4 item"><img class="img-fluid img-style" src="../static/images/rza/rza2.jpg">
+                  <h3 class="name">{{x.name}}</h3>
+                  <p class="description" style="color:white;">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
+              </div>
+            {% endfor %}
+
+        </div>
+
+
+
+    </div>
+</div>
+
+{% endblock %}

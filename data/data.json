@@ -1,0 +1,95 @@
+{"Artists":{
+  "gza":{
+    "name":"GZA",
+    "dateOfBirth" :"TAG:GZA August 22, 1966 DATE:22-08-1966",
+    "genre": "Hip-Hop",
+    "albums":
+     [{
+       "albumCover":"../static/images/gza/liquidswordsart.jpg",
+       "artistName":"GZA",
+       "name":"Liquid Swords",
+       "releaseDate":"November 7, 1995 DATE:07-11-1955",
+       "executiveProducer": "RZA",
+       "albumLength": "50:49"
+      },
+      {
+       "albumCover":"../static/images/gza/beneaththesurfaceart.jpg",
+       "artistName":"GZA",
+       "name": "Beneath the Surface",
+       "releaseDate":"June 29, 1999 DATE:29-06-1999",
+       "executiveProducer": "RZA",
+       "albumLength":"46:00"
+      },
+      {
+       "albumCover":"../static/images/gza/legendoftheliquidswordart.jpg",
+       "artistName":"GZA",
+       "name": "Legend of the Liquid Sword",
+       "releaseDate":"December 10, 2002 DATE:10-12-2002",
+       "executiveProducer":"RZA",
+       "albumLength": "50:32"
+
+      }]
+  },
+
+  "method man": {
+    "name": "Method Man",
+    "dateOfBirth": "March 2, 1971 DATE:02-03-1971",
+    "genre": "Hip-Hop",
+    "albums":
+    [{
+      "artistName":"Method Man",
+      "name": "Tical",
+      "releaseDate": "November 15, 1994 DATE:15-11-1994",
+      "executiveProducer": "RZA",
+      "albumLength": "43:49"
+      },
+      {
+       "artistName": "Method Man",
+       "name":"Tical 2000: Judgement Day",
+       "releaseDate": "November 17, 1998 DATE:17-11-1998",
+       "executiveProducer": "RZA",
+       "albumLength":"73:21"
+      },
+      {
+        "artistName": "Method Man",
+        "name": "Tical 0: The Prequel",
+        "releaseDate": "May 18, 2004 DATE:18-05-2004",
+        "executiveProducer": "Method Man",
+        "albumLength": "55:11"
+      }
+     ]
+  },
+
+  "raekwon": {
+  "name": "Raekwon",
+  "dateOfBirth": "January 12, 1970 DATE:12-01-1970",
+  "genre": "Hip-Hop",
+  "albums":
+  [{
+    "albumCover": "../static/images/raekwon/onlybuilt4cubanlinxart.jpg",
+    "artistName":"Raekwon",
+    "name": "Only Built 4 Cuban Linx",
+    "releaseDate": "August 1, 1995 DATE:01-08-1995",
+    "executiveProducer": "RZA",
+    "albumLength": "69:30"
+    },
+    {
+     "artistName": "Raekwon",
+     "name":"Immobilarity",
+     "releaseDate": "November 16, 1998 DATE:16-11-1999",
+     "executiveProducer": "Raekwon",
+     "albumLength":"65:12"
+    },
+    {
+      "artistName": "Raekwon",
+      "name": "Only Built 4 Cuban Linx Pt. II",
+      "releaseDate": "September 8, 2009 DATE:08-09-2009",
+      "executiveProducer": "RZA",
+      "albumLength": "70:52"
+    }
+   ]
+ }
+
+}
+
+}

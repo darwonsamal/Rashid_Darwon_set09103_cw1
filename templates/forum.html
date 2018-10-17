@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="../static/css/forum.css">
+
+
+
+
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="../static/css/Article-Dual-Column.css">
+    <link rel="stylesheet" href="../static/css/Article-List.css">
+    <link rel="stylesheet" href="../static/css/Header-Blue.css">
+    <link rel="stylesheet" href="../static/css/Projects-Clean.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+
+<div class="projects-clean" style="background-color:rgb(6,6,6);">
+    <div class="container">
+        <div class="intro">
+            <h2 class="text-center" style="color:yellow;">Meet The Community</h2>
+            <p class="text-center" style="color:yellow;">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae. </p>
+        </div>
+</div>
+</div>
+
+
+<div id="w">
+
+
+  <div id="container">
+    <ul id="comments">
+
+
+      {% for x in comments %}
+      <li class="cmmnt">
+
+        <div class="cmmnt-content">
+           <header>
+               {{comments[x].name}}
+             - <span class="pubdate">posted in {{comments[x].date}}</span>
+           </header>
+          <p>{{comments[x].message}}</p>
+          {% if session['logged_in'] %}
+          <form method="post" action="{{url_for('deleteComment')}}">
+
+              <div class="form-group"><button class="btn btn-primary" type="submit" name="deleteComment"  value="{{x}}">Delete Comment</button></div>
+
+          </form>
+          {% endif %}
+
+
+
+        </div>
+
+      </li>
+      {% endfor %}
+
+      <div class="line"></div>
+
+      {% if pageNumber != maxPageNumber %}
+      <form method="post" action="{{url_for('nextPage')}}" style="float:right;">
+
+          <div class="form-group"><button class="btn btn-primary" type="submit" name="deleteComment"  value="{{x}}">Next Page</button></div>
+
+      </form>
+      {% endif %}
+      {%if pageNumber != 1%}
+      <form method="post" action="{{url_for('previousPage')}}" style="float:left;">
+
+          <div class="form-group"><button class="btn btn-primary" type="submit" name="deleteComment"  value="{{x}}">Previous Page</button></div>
+
+      </form>
+      {% endif %}
+
+      {% if session['logged_in'] %}
+      <form method="post" action="{{url_for('deletePage')}}" style="margin: 0 auto;">
+
+          <div class="form-group"><button class="btn btn-primary" type="submit" name="deleteComment"  value="{{x}}">Delete Page</button></div>
+
+      </form>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+
+
+<div class="contact-clean">
+    <form method="post" action="{{url_for('forum')}}" name="commentForm" enctype="multipart/form-data">
+        <h2 class="text-center">Comment</h2>
+
+        <div class="form-group">
+
+          <input class="form-control is-invalid" type="text" name="name" placeholder="Name" />
+          {% if errors|length != 0 %}
+            {% for x in errors %}
+              <small class="form-text text-danger">{{x.nameError}}</small>
+            {% endfor %}
+
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" rows="14" name="message" placeholder="Message"></textarea>
+          {% if errors|length != 0 %}
+            {% for x in errors %}
+              <small class="form-text text-danger">{{x.messageError}}</small>
+            {% endfor %}
+
+          {% endif %}
+        </div>
+        <div class="form-group"><button class="btn btn-primary" type="submit">Submit</button></div>
+    </form>
+</div>
+
+
+{% endblock %}
