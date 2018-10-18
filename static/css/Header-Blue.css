@@ -5,8 +5,9 @@
     padding-bottom:120px;
     width:100%;
     background-size:99.9%;
-    height:1%;
+    height:400px;
     background-color:black;
+    background-image:url("../static/images/cover.jpg");
   }
 }
 
@@ -166,6 +167,6 @@
 
 .header-blue {
   font-family:'Source Sans Pro', sans-serif;
-  height:500px;
+  height:400px;
   background-color:black;
 }

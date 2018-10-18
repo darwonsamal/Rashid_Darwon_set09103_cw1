@@ -31,7 +31,24 @@ def root():
 
 @app.route('/meettheclan/')
 def meettheclan():
-    return render_template('meettheclan.html', background = url_for('static', filename = 'images/wucover3X.jpg'))
+
+    artists = data['Artists']
+
+    returnArtists = []
+    returnArtist = {}
+
+    for x in artists:
+        artist = artists[x]
+
+        returnArtist = {"name": artist.get('name'),
+        "genre": artist.get('genre'), "clanPhoto" : artist.get('clanPhoto'),
+        "clanDescription" : artist.get('clanDescription'),
+        "dateOfBirth": artist.get('dateOfBirth') }
+        returnArtists.append(returnArtist)
+
+    print(returnArtists)
+
+    return render_template('meettheclan.html', background = url_for('static', filename = 'images/wucover3X.jpg'), artist = returnArtists)
 
 @app.route('/albums/')
 def albums():
@@ -366,6 +383,7 @@ def forum():
 def showArtist(artistName):
     artists = data['Artists']
 
+
     returnArtists = []
     returnAlbums = []
     returnArtist = {}
@@ -376,7 +394,8 @@ def showArtist(artistName):
         if artistName.lower() == x:
 
             returnArtist = {"name": artist.get('name'),
-            "genre": artist.get('genre'),
+            "genre": artist.get('genre'), "clanPhoto" : artist.get('clanPhoto'),
+            "clanDescription" : artist.get('clanDescription'),
             "dateOfBirth": artist.get('dateOfBirth') }
             returnArtists.append(returnArtist)
 

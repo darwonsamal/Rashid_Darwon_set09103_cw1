@@ -1,8 +1,10 @@
 {"Artists":{
   "gza":{
     "name":"GZA",
-    "dateOfBirth" :"TAG:GZA August 22, 1966 DATE:22-08-1966",
+    "dateOfBirth" :"22-08-1966",
     "genre": "Hip-Hop",
+    "clanPhoto": "../static/images/gza/gza6.jpg",
+    "clanDescription": "A founding member of the hip hop group the Wu-Tang Clan, GZA is known as the group's spirtual head, being both the oldest and the first within the group to receive a record deal.",
     "albums":
      [{
        "albumCover":"../static/images/gza/liquidswordsart.jpg",
@@ -35,6 +37,8 @@
     "name": "Method Man",
     "dateOfBirth": "March 2, 1971 DATE:02-03-1971",
     "genre": "Hip-Hop",
+    "clanPhoto": "../static/images/methodman/methodman1.jpg",
+    "clanDescription": "",
     "albums":
     [{
       "artistName":"Method Man",
@@ -64,6 +68,8 @@
   "name": "Raekwon",
   "dateOfBirth": "January 12, 1970 DATE:12-01-1970",
   "genre": "Hip-Hop",
+  "clanPhoto": "../static/images/raekwon/raekwon2.jpg",
+  "clanDescription": "",
   "albums":
   [{
     "albumCover": "../static/images/raekwon/onlybuilt4cubanlinxart.jpg",

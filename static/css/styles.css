@@ -19,20 +19,13 @@
   color: black;
   height: 100%;
   position: relative;
-
-
   margin: 0 auto;
-
-
 
 }
 
 .img-style{
-
-}
-
-.img-style-gza{
-  width: 75%;
+  width: 220px;
+  height: 220px;
 }
 
 
@@ -41,6 +34,10 @@
   height: 220px;
 }
 
+.img-artist-cover{
+  width: 220px;
+  height: 220px;
+}
 
 .meettheclan-a-style{
   color: Yellow;

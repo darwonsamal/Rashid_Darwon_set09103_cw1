@@ -4,16 +4,19 @@
     <div style="background-color:black;color:Yellow;">
         <div class="container">
             <div class="row">
-                <div class="col-md-6" style="height:480px;background-image:url(&quot;../static/images/gza/gza4.jpg&quot;);"><img></div>
+                {%for x in artists %}
+                <div class="col-md-6"><img class="img-fluid img-style" src={{x.clanPhoto}}></div>
                 <div class="col-md-6">
-                    {%for x in artists %}
+
                     <h1>{{x.name}}</h1>
-                    {% endfor %}
-                    <p><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br></p>
+                    <h3>Date of Birth: {{x.dateOfBirth}}</h3>
+                    <h3>Genre: {{x.genre}}</h3>
+
+                    <p><br>{{x.clanDescription}}<br><br></p>
                     <p><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br></p>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -25,7 +28,7 @@
             <div class="row projects" style="color:Yellow;">
               {% for x in albums %}
                 <div class="col-sm-6 col-lg-4 item"><img class= "img-fluid img-artist-album-image"  src="{{x.albumCover}}" />
-                    <h3 class="name">{{x.name}}</h3>
+                    <a href="{{url_for('showAlbum', albumName = x.name)}}" class="meettheclan-a-tyle">  <h3 class="name">{{x.name}}</h3></a>
                     <p class="description" style="color:white;">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
                 </div>
               {% endfor %}
