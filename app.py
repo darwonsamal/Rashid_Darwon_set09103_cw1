@@ -197,6 +197,7 @@ def login():
 
     if request.method == 'POST':
 
+        print(app.config['password'])
 
         if request.form['password'] != app.config['password']:
             error = {"passwordError": "Incorrect password"}
@@ -213,7 +214,7 @@ def login():
 
 
 
-        if request.form['password'] == '1234' and request.form['name'] == 'admin':
+        if request.form['password'] ==  app.config['password'] and request.form['name'] == app.config['admin']:
             session['logged_in'] = True
 
             return redirect('/')
@@ -691,10 +692,6 @@ def searchPost():
         return  render_template('showResults.html', artist = returnArtists, albums = returnAlbums, height = "100px")
 
 
-
-
-
-
 @app.route('/search/<search>')
 def showSearch(search):
 
@@ -762,17 +759,6 @@ def showSearch(search):
                     returnAlbums.append(returnAlbum)
 
     return  render_template('showResults.html', artist = returnArtists, albums = returnAlbums, height = "100px")
-
-
-@app.route('/config')
-def config():
-    str = []
-    str.append('Debug:' + app.config['DEBUG'])
-    str.append('port:' + app.config['port'])
-    str.append('url:' + app.config['url'])
-    str.append('ip_address:' + app.config['ip_address'])
-
-    return '\t'.join(str)
 
 
 @app.errorhandler(404)
