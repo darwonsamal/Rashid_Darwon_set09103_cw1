@@ -38,6 +38,12 @@
                             </div>
                         </li>
                     </ul>
+
+                    <form method = "post" enctype="multipart/form-data"      class="form-inline mr-auto" action="{{url_for('searchPost')}}" >
+                        <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label>
+                            <input class="form-control search-field" type="search" name="search" id="search-field">
+                        </div>
+                    </form>
                     {% if session['logged_in'] %}
                     <span class="navbar-text ml-auto"> <a href="{{url_for('logout')}}" class="login">Log Out</a>
                     {% else %}

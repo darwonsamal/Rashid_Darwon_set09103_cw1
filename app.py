@@ -19,6 +19,107 @@ data = json.load(open("data/data.json"))
 
 files = json.load(open("data/files.json"))
 
+
+# FUNCTIONS
+def generateID(fileName):
+
+    max = 0
+
+    files = json.load(open(fileName))
+
+    for x in files:
+        tempID = int(x)
+
+        if tempID > max:
+            max = tempID
+
+    max+=1
+    return str(max)
+
+def getCommentsAndFileName(pageNumber):
+
+    tupleList = []
+
+    for x in files:
+
+        tempID = x
+
+
+        if pageNumber == tempID:
+
+
+            fileName = "data/" + files[x]['fileName'] + ".json"
+
+
+            comments = json.load(open(fileName))
+
+            return comments, fileName
+
+
+def sortDictionary(comments):
+    tupleList = []
+
+    for x in comments:
+
+
+        tempDate = int(comments[x]['date'].replace('-', ''))
+        tempID = x
+
+
+        tupleList.append((tempID, tempDate))
+
+
+
+    tupleList = sorted(tupleList, key= itemgetter(1), reverse = True)
+
+    sortedComments = {}
+    for x in tupleList:
+
+        for y in comments:
+
+            if x[0] == y:
+
+                comment = {y : { "name": comments[y]['name'], "message": comments[y]['message'], "date": comments[y]['date']}}
+
+
+                sortedComments.update(comment)
+
+    return sortedComments
+
+
+def getStartingPage():
+
+    min = 5000
+    for x in files:
+
+        tempID = int(x)
+        
+
+
+
+        if tempID < min:
+            
+            min = tempID
+
+
+    return min
+
+
+def getMaxPageNumber():
+     max = 0
+
+     for x in files:
+
+         tempID = int(x)
+
+
+         if tempID > max:
+             max = tempID
+
+     return max
+
+
+# ROUTES
 @app.route('/')
 def root():
     if not session.get('logged_in'):
@@ -30,6 +131,7 @@ def root():
 
     
     return render_template('index.html', login = login, background = url_for('static', filename = 'images/wucover3X.jpg'))
+
 
 @app.route('/artists/')
 def meettheclan():
@@ -52,6 +154,7 @@ def meettheclan():
     
 
     return render_template('meettheclan.html', background = url_for('static', filename = 'images/wucover3X.jpg'), artist = returnArtists, check = False)
+
 
 @app.route('/albums/')
 def albums():
@@ -151,28 +254,10 @@ def deleteComment():
         return render_template('forum.html', comments = comments, pageNumber = session['pageNumber'], minPageNumber = session['minPageNumber'], maxPageNumber = session['maxPageNumber'], height = "100px")
 
 
-def generateID(fileName):
-
-    max = 0
-
-    files = json.load(open(fileName))
-
-    for x in files:
-        tempID = int(x)
-
-        if tempID > max:
-            max = tempID
-
-    max+=1
-    return str(max)
-
-
 @app.route('/deletePage', methods = ['POST'])
 def deletePage():
 
     data = json.load(open(session['currentFileName']))
-
-    comments = data
 
     fileName = session['currentFileName']
 
@@ -209,11 +294,10 @@ def deletePage():
         pageNumber = session['pageNumber']
 
         session['minPageNumber'] = minPageNumber
+
         session['maxPageNumber'] = maxPageNumber
 
         data, session['currentFileName'] = getCommentsAndFileName(str(pageNumber))
-
-     
 
         sortedComments = {}
 
@@ -293,89 +377,6 @@ def previousPage():
     comments = sortDictionary(comments)
     
     return render_template('forum.html', comments = comments,  pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
-
-
-def getCommentsAndFileName(pageNumber):
-
-    tupleList = []
-
-    for x in files:
-
-        tempID = x
-
-
-        if pageNumber == tempID:
-
-
-            fileName = "data/" + files[x]['fileName'] + ".json"
-
-
-            comments = json.load(open(fileName))
-
-            return comments, fileName
-
-
-def sortDictionary(comments):
-    tupleList = []
-
-    for x in comments:
-
-
-        tempDate = int(comments[x]['date'].replace('-', ''))
-        tempID = x
-
-
-        tupleList.append((tempID, tempDate))
-
-
-
-    tupleList = sorted(tupleList, key= itemgetter(1), reverse = True)
-
-    sortedComments = {}
-    for x in tupleList:
-
-        for y in comments:
-
-            if x[0] == y:
-
-                comment = {y : { "name": comments[y]['name'], "message": comments[y]['message'], "date": comments[y]['date']}}
-
-
-                sortedComments.update(comment)
-
-    return sortedComments
-
-
-def getStartingPage():
-
-    min = 5000
-    for x in files:
-
-        tempID = int(x)
-        #print(tempID)
-
-
-
-        if tempID < min:
-            
-            min = tempID
-
-
-    return min
-
-
-def getMaxPageNumber():
-     max = 0
-
-     for x in files:
-
-         tempID = int(x)
-
-
-         if tempID > max:
-             max = tempID
-
-     return max
 
 
 @app.route('/forumPost/', methods= ['POST'])
@@ -617,6 +618,83 @@ def showResults(searchItem1, searchItem2):
     return render_template('showResults.html', artist = returnArtists, albums = returnAlbums, height = "100px")
 
 
+@app.route('/searchPost/', methods = ['POST'])
+def searchPost():
+
+    if request.method == 'POST':
+
+        search = request.form['search']
+
+        returnArtists = []
+        returnAlbums = []
+
+        #First we check if it is an artist name or date of birth or genre
+
+        artists = data['Artists']
+
+        for x in artists:
+            artist = artists[x]
+
+
+
+            getAlbums = artist.get('albums')
+
+            found = False
+
+
+
+            #check to see if user typed artist name, date of birth, and genre
+            if search.lower() == x or search == artist.get('dateOfBirth') or search == artist.get('genre'):
+
+                returnArtist = {"name": artist.get('name'),
+                "genre": artist.get('genre'),
+                "clanPhoto" : artist.get('clanPhoto'),
+                "clanDescription" : artist.get('clanDescription'),
+                "dateOfBirth": artist.get('dateOfBirth') }
+
+
+
+
+                for y in getAlbums:
+
+                    returnAlbum = {"artistName": y.get('artistName'),
+                    "name":y.get('name'),
+                    "releaseDate": y.get('releaseDate'),
+                    "albumCover" : y.get('albumCover'),
+                    "executiveProducer": y.get('executiveProducer'),
+                    "albumLength": y.get('albumLength'),
+                    "albumDescription": y.get('albumDescription')}
+
+                    returnAlbums.append(returnAlbum)
+
+                returnArtists.append(returnArtist)
+                found = True
+
+
+        # If not above, then the person is trying to find something album related
+            if found == False:
+
+                for y in artist.get('albums'):
+
+
+                    if search == y.get('name') or search == y.get('releaseDate') or search == y.get('executiveProducer') or search == y.get('albumLength'):
+
+                        returnAlbum = {"name" : y.get('name'),
+                        "releaseDate": y.get('releaseDate'),
+                        "albumCover" : y.get('albumCover'),
+                        "executiveProducer": y.get('executiveProducer'),
+                        "albumLength": y.get('albumLength'),
+                        "albumDescription": y.get('albumDescription') }
+
+                        returnAlbums.append(returnAlbum)
+
+        return  render_template('showResults.html', artist = returnArtists, albums = returnAlbums, height = "100px")
+
+
+
+
+
+
 @app.route('/search/<search>')
 def showSearch(search):
 
@@ -695,7 +773,6 @@ def config():
     str.append('ip_address:' + app.config['ip_address'])
 
     return '\t'.join(str)
-
 
 
 @app.errorhandler(404)

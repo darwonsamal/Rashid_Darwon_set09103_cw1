@@ -8,8 +8,14 @@
         {% if artist|length != 0 %}
         <div class="intro">
           <h2 class="text-center" style="color:yellow;">Artist Results</h2>
-
+        
         </div>
+        
+        {% else %}
+        <div class="intro">
+            <h2 class="text-center" style="color:yellow;">No Artist Results</h2>
+          
+          </div>
         {%endif%}
         <div class="row projects" style="color:Yellow;">
           {%for x in artist%}
@@ -29,7 +35,14 @@
         <div class="intro">
           <h2 class="text-center" style="color:yellow;">Album Results</h2>
         </div>
+
+        {% else %}
+        <div class="intro">
+            <h2 class="text-center" style="color:yellow;">No Album Results</h2>
+          
+          </div>
         {%endif%}
+      
 
         <div class="row projects" style="color:Yellow;">
             {%for x in albums%}
