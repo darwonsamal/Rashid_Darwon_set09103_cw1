@@ -41,7 +41,33 @@
 
 .meettheclan-a-style{
   color: Yellow;
+  
 
+}
+
+.form-buttons {
+  background-color: #055ada !important;
+  padding: 16px 32px;
+  margin-top: 15px;
+  color: #fff;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  opacity: 0.9;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  line-height: 1;
+  outline: none !important;
+}
+
+a {
+  color: yellow;
+}
+
+a:hover{
+  color: yellow;
 }
 
 .contact-clean {
@@ -62,7 +88,7 @@
   background-color:black;
   padding:40px;
   border-radius:4px;
-  color:Yellow;
+  
   box-shadow:1px 1px 5px rgba(0,0,0,0.1);
 }
 

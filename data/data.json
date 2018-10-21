@@ -4,97 +4,259 @@
     "dateOfBirth" :"22-08-1966",
     "genre": "Hip-Hop",
     "clanPhoto": "../static/images/gza/gza6.jpg",
-    "clanDescription": "A founding member of the hip hop group the Wu-Tang Clan, GZA is known as the group's spirtual head, being both the oldest and the first within the group to receive a record deal.",
+    "clanDescription": "The Genius",
+    "artistBio" : "He has appeared on his fellow Clan members solo projects, and since the release of his critically acclaimed solo album Liquid Swords (1995), he has maintained a successful solo career. He is considered to be one of the best MCs and lyricists because he is armed with sharp metaphors and a smooth flow, and has been noted for his lyrical style, which often dismisses typical rap story lines in favor of science and wide-ranging philosophies. An analysis of GZA's lyrics found that he has the second largest vocabulary in popular hip hop music.",
     "albums":
      [{
        "albumCover":"../static/images/gza/liquidswordsart.jpg",
        "artistName":"GZA",
        "name":"Liquid Swords",
-       "releaseDate":"November 7, 1995 DATE:07-11-1955",
+       "releaseDate":"07-11-1955",
        "executiveProducer": "RZA",
-       "albumLength": "50:49"
-      },
-      {
-       "albumCover":"../static/images/gza/beneaththesurfaceart.jpg",
-       "artistName":"GZA",
-       "name": "Beneath the Surface",
-       "releaseDate":"June 29, 1999 DATE:29-06-1999",
-       "executiveProducer": "RZA",
-       "albumLength":"46:00"
+       "albumLength": "50:49",
+       "albumDescription": "Liquid Swords is the second solo studio album of GZA",
+       "albumBio" : "Recording sessions for the album began midway through 1995 at producer RZA's basement studio in the New York City borough of Staten Island. The album heavily samples dialogue from the martial arts film Shogun Assassin and maintains a dark atmosphere throughout its course, while it incorporates lyrical references to chess, crime and philosophy. Liquid Swords features numerous guest appearances from the entire nine piece Wu-Tang Clan, and also Wu-Tang affiliate Killah Priest."
+
       },
       {
        "albumCover":"../static/images/gza/legendoftheliquidswordart.jpg",
        "artistName":"GZA",
        "name": "Legend of the Liquid Sword",
-       "releaseDate":"December 10, 2002 DATE:10-12-2002",
+       "releaseDate":"10-12-2002",
        "executiveProducer":"RZA",
-       "albumLength": "50:32"
+       "albumLength": "50:32",
+       "albumDescription": "Legend of the Liquid Sword is the fourth solo studio album of GZA",
+       "albumBio" : "The album is named after the kung fu film Legend of the Liquid Sword. In the songs Did Ya Say That, and Knock Knock, GZA focuses on the politics of record labels, and expresses his issues in dealing with record companies over artistic goals in music."
 
       }]
   },
 
+  "rza":{
+    "name":"RZA",
+    "dateOfBirth" :"05-07-1969",
+    "genre": "Hip-Hop",
+    "clanPhoto": "../static/images/rza/rza2.jpg",
+    "clanDescription": "The Director",
+    "artistBio" : "He has produced almost all of Wu-Tang Clan's albums, as well as many Wu-Tang solo and affiliate projects. He is a cousin of two other original Wu-Tang Clan members: GZA and Ol' Dirty Bastard. He has also released solo albums under the alter-ego Bobby Digital, along with executive producing credits for side projects. Prior to forming the Wu-Tang Clan, RZA was a founding member of the horrorcore group Gravediggaz, where he went by the name The RZArector.",
+    "albums":
+     [{
+       "albumCover":"../static/images/rza/bobbydigitalinstereo.jpg",
+       "artistName":"RZA",
+       "name":"Bobby Digital in Stereo",
+       "releaseDate":"24-11-1998",
+       "executiveProducer": "RZA",
+       "albumLength": "67:57",
+       "albumDescription": "Bobby Digital in Stereo is the solo debut album of RZA.",
+       "albumBio" : "The album is a well-received experimental album that is based on a story featuring him rhyming as a hedonistic, fun-loving alter-ego named Bobby Digital and showcasing a unique keyboard-driven sound (rather than samples) that the RZA called digital orchestra."
+
+      }
+     ]
+  },
+
   "method man": {
     "name": "Method Man",
-    "dateOfBirth": "March 2, 1971 DATE:02-03-1971",
+    "dateOfBirth": "02-03-1971",
     "genre": "Hip-Hop",
     "clanPhoto": "../static/images/methodman/methodman1.jpg",
-    "clanDescription": "",
+    "clanDescription" : "The Funky",
+    "artistBio": "As Wu-Tang Clan ascended to hip hop stardom, Method Man was always one of the most visible members of the collective. He was one of only two members to get a solo song on the group's debut album Enter the Wu-Tang (36 Chambers) and he was the first to release a solo album under the Clan's unusual contract which allowed its members to release albums under any record label.",
     "albums":
     [{
+      "albumCover":"../static/images/methodman/tical.jpg",
       "artistName":"Method Man",
       "name": "Tical",
-      "releaseDate": "November 15, 1994 DATE:15-11-1994",
+      "releaseDate": "15-11-1994",
       "executiveProducer": "RZA",
-      "albumLength": "43:49"
+      "albumLength": "43:49",
+      "albumDescription": "Tical is the debut studio album by Method Man.",
+      "albumBio" : "It was the first Wu-Tang solo album released after the group's debut, Enter the Wu-Tang (36 Chambers). Similar to all first generation solo Wu-Tang projects, Tical was mainly produced by group member RZA, who provided a dark, murky and rugged sound. The album features guest appearances from RZA, Raekwon, Inspectah Deck, as well as several affiliates, who would later appear on future group projects. The album's title Tical is a slang term for a blunt that has been laced with an adulterant, typically a sweetener or another psychoactive substance."
       },
       {
+       "albumCover":"../static/images/methodman/tical2000.jpg",
        "artistName": "Method Man",
        "name":"Tical 2000: Judgement Day",
-       "releaseDate": "November 17, 1998 DATE:17-11-1998",
+       "releaseDate": "17-11-1998",
        "executiveProducer": "RZA",
-       "albumLength":"73:21"
-      },
-      {
-        "artistName": "Method Man",
-        "name": "Tical 0: The Prequel",
-        "releaseDate": "May 18, 2004 DATE:18-05-2004",
-        "executiveProducer": "Method Man",
-        "albumLength": "55:11"
+       "albumLength":"73:21",
+       "albumDescription": "Tical 2000: Judgement Day is the second studio album by Method Man.",
+       "albumBio" : "The album's title and overall theme were heavily influenced by the apocalypse theories surrounding the forthcoming end of the second millennium. Judgement Day features production from RZA, True Master, Inspectah Deck, 4th Disciple, Erick Sermon, Havoc, and Trackmasters, among others. The album also features a multitude of guest appearances from artists such as Redman, Left Eye, Mobb Deep, D'Angelo and various Wu-Tang Clan members and affiliates such as Streetlife, who appears on seven of the album's twenty-eight tracks."
       }
+      
      ]
   },
 
   "raekwon": {
   "name": "Raekwon",
-  "dateOfBirth": "January 12, 1970 DATE:12-01-1970",
+  "dateOfBirth": "12-01-1970",
   "genre": "Hip-Hop",
   "clanPhoto": "../static/images/raekwon/raekwon2.jpg",
-  "clanDescription": "",
+  "clanDescription": "The Gangster",
+  "artistBio" : "Raekwon has been cited as a pioneer of Gangster rap. In 2007, the editors of About.com placed him on their list of the Top 50 MCs of Our Time (1987–2007). The Miami New Times described Raekwon's music as being street epics that are straightforward yet linguistically rich universes not unlike a gangsta Iliad.",
   "albums":
   [{
-    "albumCover": "../static/images/raekwon/onlybuilt4cubanlinxart.jpg",
+    "albumCover": "../static/images/raekwon/onlybuilt4cubanlinx.jpg",
     "artistName":"Raekwon",
     "name": "Only Built 4 Cuban Linx",
-    "releaseDate": "August 1, 1995 DATE:01-08-1995",
+    "releaseDate": "01-08-1995",
     "executiveProducer": "RZA",
-    "albumLength": "69:30"
+    "albumLength": "69:30",
+    "albumDescription": "Only Built 4 Cuban Linx is the solo debut album of Raekwon.",
+    "albumBio" : "The album was loosely composed to play like a film with Raekwon as the star, fellow Wu-Tang member Ghostface Killah as the guest-star, and producer RZA as the director. It features appearances from every member of the Wu-Tang Clan and affiliates Cappadonna, and Blue Raspberry. It also features an acclaimed guest appearance from rapper Nas, which marked the first collaboration with a non-affiliated artist on a Wu-Tang related album."
     },
     {
-     "artistName": "Raekwon",
-     "name":"Immobilarity",
-     "releaseDate": "November 16, 1998 DATE:16-11-1999",
-     "executiveProducer": "Raekwon",
-     "albumLength":"65:12"
-    },
-    {
+      "albumCover": "../static/images/raekwon/onlybuilt4cubanlinx2.jpg",
       "artistName": "Raekwon",
       "name": "Only Built 4 Cuban Linx Pt. II",
-      "releaseDate": "September 8, 2009 DATE:08-09-2009",
+      "releaseDate": "08-09-2009",
       "executiveProducer": "RZA",
-      "albumLength": "70:52"
+      "albumLength": "70:52",
+      "albumDescription": "Only Built 4 Cuban Linx Pt. II is the fourth studio album by Raekwon.",
+      "albumBio" : "The album maintains many of the themes covered on its predecessor, and features guest appearances from several Wu-Tang members, as well as Busta Rhymes, Jadakiss and Beanie Sigel. Only Built 4 Cuban Linx... Pt. II received widespread acclaim from music critics, based on an aggregate score of 88/100 from Metacritic, indicating universal acclaim."
     }
    ]
- }
+ },
+
+ "odb":{
+  "name":"Ol' Dirty Bastard",
+  "dateOfBirth" :"15-11-1968",
+  "genre": "Hip-Hop",
+  "clanPhoto": "../static/images/odb/odb3.jpg",
+  "clanDescription": "The Nasty",
+  "artistBio": "He was one of the founding members of the Wu-Tang Clan, a rap group primarily from Staten Island, New York which first rose to mainstream prominence with their 1993 debut album Enter the Wu-Tang (36 Chambers). Ol' Dirty Bastard was noted for his outrageously profane, free-associative rhymes delivered in a distinctive half-rapped, half-sung style.",
+  "albums":
+   [{
+     "albumCover":"../static/images/odb/returntothe36chambers.jpg",
+     "artistName":"Ol' Dirty Bastard",
+     "name":"Return to the 36 Chambers: The Dirty Version",
+     "releaseDate":"28-03-1995",
+     "executiveProducer": "RZA",
+     "albumLength": "59:04",
+     "albumDescription": "Return to the 36 Chambers: The Dirty Version is the solo debut album of Ol' Dirty Bastard.",
+     "albumBio" : "Return to the 36 Chambers was primarily produced by RZA, with additional production from Ol' Dirty Bastard, and affiliates True Master and 4th Disciple. The album features guest appearances from Wu-Tang members GZA, RZA, Method Man, Raekwon, Ghostface Killah and Masta Killa, as well as several Wu-Tang affiliates and Brooklyn Zu."
+    },
+    {
+    "albumCover":"../static/images/odb/niggaplease.jpg",
+    "artistName":"Ol' Dirty Bastard",
+    "name":"Nigga Please",
+    "releaseDate":"14-09-1999",
+    "executiveProducer": "RZA",
+    "albumLength": "47:48",
+    "albumDescription": "Nigga Please is the second studio album of Ol' Dirty Bastard.",
+    "albumBio" : "Ol' Dirty Bastard's second solo release is as raunchy as his work with his band the Wu Tang Clan. He lets loose with an over-the-top deluge of wicked rhymes, dark humor, and spare sample beats that seem to come from every direction."
+
+    }]
+},
+"ghostface killah":{
+  "name":"Ghostface Killah",
+  "dateOfBirth" :"09-05-1970",
+  "genre": "Hip-Hop",
+  "clanPhoto": "../static/images/ghostfacekillah/ghostfacekillah3.jpg",
+  "clanDescription": "The Ironman",
+  "artistBio": " After the group achieved breakthrough success in the aftermath of Enter the Wu-Tang (36 Chambers), the members went on to pursue solo careers to varying levels of success. Ghostface Killah debuted his solo-career with Ironman in 1996, which was well received by music critics. He has continued his success over the following years with critically acclaimed albums such as Supreme Clientele (2000) and Fishscale (2006). His stage name was taken from one of the characters in the 1979 kung fu film Mystery of Chessboxing. He is the founder of his own label Starks Enterprises.",
+  "albums":
+   [{
+     "albumCover":"../static/images/ghostfacekillah/ironman.jpg",
+     "artistName":"Ghostface Killah",
+     "name":"Ironman",
+     "releaseDate":"29-10-1996",
+     "executiveProducer": "RZA",
+     "albumLength": "64:48",
+     "albumDescription": "Ironman is the debut solo album of Ghostface Killah.",
+     "albumBio" : "As opposed to earlier Wu-Tang solo projects, in which the performers involved were believed to be infallible, Ghostface is somewhat vulnerable on several of the album's songs. This is perhaps best illustrated on the single, All That I Got Is You, which is essentially a tribute to his mother. However, the rest of the album contains many street oriented, and organized crime topics, similar to Only Built 4 Cuban Linx..., in which Ghostface was heavily involved. "
+    },
+    {
+    "albumCover":"../static/images/ghostfacekillah/supremeclientele.jpg",
+    "artistName":"Ghostface Killah",
+    "name":"Supreme Clientele",
+    "releaseDate":"08-02-2000",
+    "executiveProducer": "RZA",
+    "albumLength": "64:10",
+    "albumDescription": "Supreme Clientele is the second studio album of Ghostface Killah.",
+    "albumBio" : "The album showcases Ghostface's signature up-tempo, stream-of-consciousness rhyme style, and features guest appearances from Cappadonna, GZA, Masta Killa, Method Man, Raekwon, Redman, RZA, U-God, and others. Supreme Clientele contains a large amount of production from group member RZA."
+
+    }]
+},
+"inspectah deck":{
+  "name":"Inspectah Deck",
+  "dateOfBirth" :"06-07-1970",
+  "genre": "Hip-Hop",
+  "clanPhoto": "../static/images/inspectahdeck/inspectahdeck1.jpg",
+  "clanDescription": "The Quiet",
+  "artistBio": "Inspectah deck developed a laid-back and quiet personality which he carried into his stage persona, as a low-key counterbalance to the antics of Method Man, Ol' Dirty Bastard, and RZA. Despite this inconspicuous persona, Inspectah Deck maintained a relatively high profile, as he was the second most featured member on the album, and provided highly acclaimed verses for the singles C.R.E.A.M., Protect Ya Neck, Wu-Tang Clan Ain't Nuthing ta Fuck Wit, and Da Mystery of Chessboxin. ",
+  "albums":
+   [{
+     "albumCover":"../static/images/inspectahdeck/uncontrolledsubstance.jpg",
+     "artistName":"Inspectah Deck",
+     "name":"Uncontrolled Substance",
+     "releaseDate":"05-10-1999",
+     "executiveProducer": "RZA",
+     "albumLength": "65:56",
+     "albumDescription": "Uncontrolled Substance is the solo debut album of Inspectah Deck.",
+     "albumBio" : "Inspectah Deck's debut LP has been one of the most eagerly awaited in Wu-Tang's long history. As the Clan's vaunted lead hitter on pivotal posse cuts like Triumph and Protect Ya Neck, Deck displays a gift for metaphoric mastery and complex rhyme schemes. In fact, few other MCs are more effective than Deck at creating evocative street-level images with single line strokes from his lyrical stylus."
+    },
+    {
+    "albumCover":"../static/images/inspectahdeck/themovement.jpg",
+    "artistName":"Inspectah Deck",
+    "name":"The Movement",
+    "releaseDate":"10-06-2003",
+    "executiveProducer": "Inspectah Deck",
+    "albumLength": "58:50",
+    "albumDescription": "The Movement is the second studio album of Inspectah Deck.",
+    "albumBio" : "A departure from Uncontrolled Substance's darker, soul-inspired sound, The Movement is more upbeat and expressive. According to Inspectah Deck, 'Uncontrolled Substance was just me as an ill lyricist wanting to put an album out. I just wanted to be heard. The Movement is like is me behind the scenes, behind everything. I'm doing ... everything. All the credits got Inspectah Deck on it this time. I was able to put my soul into it.'"
+
+    }]
+},
+"masta killa":{
+  "name":"Masta Killa",
+  "dateOfBirth" :"18-08-1969",
+  "genre": "Hip-Hop",
+  "clanPhoto": "../static/images/mastakilla/mastakilla3.jpg",
+  "clanDescription": "The Mystery",
+  "artistBio": "Though one of the lesser-known members of the group (he was featured on only one track on their 1993 debut album Enter the Wu-Tang (36 Chambers)), he has been prolific on Clan group albums and solo projects since the mid-1990s. He released his debut album No Said Date in 2004 to positive reviews, and has since released three additional albums. During the first round of solo projects, he made several appearances on tracks now considered Wu-Tang classics, such as Winter Warz, Duel of the Iron Mic, and Glaciers of Ice. His flow at the time attracted attention for being very slow and laid-back, in contrast to the more manic, forceful styles of members like Inspectah Deck and Ghostface Killah.",
+  "albums":
+   [{
+     "albumCover":"../static/images/mastakilla/nosaiddate.jpg",
+     "artistName":"Masta Killa",
+     "name":"No Said Date",
+     "releaseDate":"01-06-2004",
+     "executiveProducer": "E. Turner",
+     "albumLength": "47:51",
+     "albumDescription": "No Said Date is the solo debut album of Masta Killa.",
+     "albumBio" : "It seems oddly appropriate that, some 10 years after the Wu-Tang Clan first put the world on notice, Masta Killa would finally get to put out his solo album--he's the last of the original Clan members to deliver one. Even more remarkable is that, at a time when the Wu mostly seem like material for a future 'I Love the '90s' installment (Ghostface excepted), Masta Killa puts together an impressive album in the best tradition of the Clan: dusty, dissonant soul loops, lyrics that are all about style rather than shine, and that classic sinister quality embodied by the Wu's best albums. "
+    },
+    {
+    "albumCover":"../static/images/mastakilla/madeinbrooklyn.jpg",
+    "artistName":"Masta Killa",
+    "name":"Made in Brooklyn",
+    "releaseDate":"08-08-2006",
+    "executiveProducer": "Devin Horwitz",
+    "albumLength": "51:16",
+    "albumDescription": "Made in Brooklyn is the second studio album of Masta Killa.",
+    "albumBio" : "Masta Killa's debut, No Said Date, marked the rare instance of a Wu Tang-affiliated album actually exceeding the hype and delivering on its own terms. Add to an impressive first album a list of producers, including MF Doom and Pete Rock, and it comes as no surprise that Killa's second outing has been eagerly awaited by hip hop fans. At a relatively lean 13 tracks, with no unfunny skits, Made In Brooklyn is a superior and taut addition to the Wu canon, which not even the risible cod reggae of Lovely Lady can detract from too much."
+
+    }]
+},
+"u-god":{
+  "name":"U-God",
+  "dateOfBirth" :"11-10-1970",
+  "genre": "Hip-Hop",
+  "clanPhoto": "../static/images/ugod/ugod3.jpg",
+  "clanDescription": "The God",
+  "artistBio": "U-God was convicted of criminal possession of controlled substance on April 17, 1992 and was paroled on January 1993. His incarceration prevented him from featuring heavily on the group's debut album Enter the Wu-Tang (36 Chambers), his input on the seminal LP consisting of only a short bridge on the group's debut single Protect Ya Neck as well as the now-famous opening verse of Da Mystery of Chessboxin. Nevertheless, after his release he quickly became known to fans for his rugged flow and bass-like voice on Wu tracks such as Winter Warz, Knuckleheadz, Investigative Reports, and Black Jesus.",
+  "albums":
+   [{
+     "albumCover":"../static/images/ugod/goldenarmsredemption.jpg",
+     "artistName":"U-God",
+     "name":"Golden Arms Redemption",
+     "releaseDate":"18-10-1999",
+     "executiveProducer": "RZA",
+     "albumLength": "62:48",
+     "albumDescription": "Golden Arms Redemption is the solo debut album of U-God.",
+     "albumBio" : "With other members of the Wu-Tang Clan--Method Man, Raekwon, Ol' Dirty Bastard, Ghostface Killah and RZA--having already stepped out from under the Clan's hugely successful shadow to score major solo hits, it was only a matter of time before U-God came forward to claim his piece of the solo action. And as well respected as his lyrical flows on the Clan's tunes are, few could have guessed just what an awesome debut it would be. U-God, aka Golden Arms, has taken his time, left other Wu-members to build the hype and spent a year putting together some seriously arresting cuts. Together with the Clan's production supremo, RZA, he's concocted a funk-fuelled catalogue of up-lifting bass rumbles, tight and oppressive drum loops, 1970s horn samples and dark cop-show grooves to run against his raw, uncompromising rhymes. "
+    }
+   ]
+}
+
 
 }
 

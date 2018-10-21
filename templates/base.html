@@ -26,17 +26,15 @@
   <body style="background-color: black;">
     <div class="header-blue" style="background-image:url(&quot;{{background}}&quot;); height:{{height}};">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-            <div class="container"><a class="navbar-brand" href="#"><img src="{{url_for('static', filename='images/symbol.png')}}" height="42" width="42"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="container"><a class="navbar-brand" href="{{url_for('root')}}"><img src="{{url_for('static', filename='images/symbol.png')}}" height="42" width="42"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse ml-auto"
                     id="navcol-1">
 
 
                     <ul class="nav navbar-nav">
                         <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Explore The Wu</a>
-                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="{{url_for('meettheclan')}}">Meet The Clan </a><a class="dropdown-item" role="presentation" href="{{url_for('forum')}}">Meet the Community</a><a class="dropdown-item" role="presentation" href="{{url_for('albums')}}">Albums</a>
-                              {% if session['logged_in'] %}
-                              <a class="dropdown-item" role="presentation" href="#">Comments</a>
-                              {% endif %}
+                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="{{url_for('meettheclan')}}">Meet The Clan </a><a class="dropdown-item" role="presentation" href="{{url_for('forum')}}">Meet The Community</a><a class="dropdown-item" role="presentation" href="{{url_for('albums')}}">Meet Their Craft</a>
+                              
                             </div>
                         </li>
                     </ul>

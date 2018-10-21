@@ -14,9 +14,9 @@
         <div class="row projects" style="color:Yellow;">
           {%for x in artist%}
 
-            <div class="col-sm-6 col-lg-4 item"><img class="img-fluid img-style" src="../static/images/rza/rza2.jpg">
-                <h3 class="name">{{x.name}}</h3>
-                <p class="description" style="color:white;">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
+            <div class="col-sm-6 col-lg-4 item"><img class="img-fluid img-style" src={{x.clanPhoto}}>
+                <a href="{{url_for('showArtist', artistName = x.name)}}" class="meettheclan-a-tyle">  <h3 class="name">{{x.name}}</h3></a>
+                <p class="description" style="color:white;">{{x.clanDescription}}</p>
             </div>
             {% endfor %}
 
@@ -33,10 +33,12 @@
 
         <div class="row projects" style="color:Yellow;">
             {%for x in albums%}
-              <div class="col-sm-6 col-lg-4 item"><img class="img-fluid img-style" src="../static/images/rza/rza2.jpg">
-                  <h3 class="name">{{x.name}}</h3>
-                  <p class="description" style="color:white;">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-              </div>
+            <div class="col-sm-6 col-lg-4 item"><img class="img-fluid img-style" src={{x.albumCover}}>
+                <a href="{{url_for('showAlbum', albumName = x.name)}}" class="meettheclan-a-style" >
+                <h3  class="name">{{x.name}}</h3>
+                </a>
+                <p class="description" style="color:white;">{{x.albumDescription}}</p>
+            </div>
             {% endfor %}
 
         </div>

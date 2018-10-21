@@ -20,7 +20,7 @@
     <div class="container">
         <div class="intro">
             <h2 class="text-center" style="color:yellow;">Meet The Community</h2>
-            <p class="text-center" style="color:yellow;">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae. </p>
+            <p class="text-center" style="color:yellow;">Go on, we know you can't resist talking about the Clan.</p>
         </div>
 </div>
 </div>
@@ -62,24 +62,26 @@
       {% if pageNumber != maxPageNumber %}
       <form method="post" action="{{url_for('nextPage')}}" style="float:right;">
 
-          <div class="form-group"><button class="btn btn-primary" type="submit" name="deleteComment"  value="{{x}}">Next Page</button></div>
+        <div class="form-group"><button class="btn form-buttons" type="submit">Next Page</button></div>
 
       </form>
       {% endif %}
-      {%if pageNumber != 1%}
+      {%if pageNumber != minPageNumber %}
       <form method="post" action="{{url_for('previousPage')}}" style="float:left;">
 
-          <div class="form-group"><button class="btn btn-primary" type="submit" name="deleteComment"  value="{{x}}">Previous Page</button></div>
+        <div class="form-group"><button class="btn form-buttons" type="submit">Previous Page</button></div>
 
       </form>
       {% endif %}
 
       {% if session['logged_in'] %}
-      <form method="post" action="{{url_for('deletePage')}}" style="margin: 0 auto;">
+      {% if pageNumber != minPageNumber %}
+      <form method="post" action="{{url_for('deletePage')}}">
 
-          <div class="form-group"><button class="btn btn-primary" type="submit" name="deleteComment"  value="{{x}}">Delete Page</button></div>
+        <div class="form-group"><button  style="margin-left: 15px;" class="btn form-buttons" type="submit">Delete Page</button></div>
 
       </form>
+      {% endif%}
       {% endif %}
     </ul>
   </div>
@@ -88,12 +90,12 @@
 
 
 <div class="contact-clean">
-    <form method="post" action="{{url_for('forum')}}" name="commentForm" enctype="multipart/form-data">
-        <h2 class="text-center">Comment</h2>
+    <form method="post" action="{{url_for('forumPost')}}" name="commentForm" enctype="multipart/form-data">
+        <h2 class="text-center" style="color:Yellow;">Comment</h2>
 
         <div class="form-group">
 
-          <input class="form-control is-invalid" type="text" name="name" placeholder="Name" />
+          <input class="form-control" type="text" name="name" placeholder="Name" />
           {% if errors|length != 0 %}
             {% for x in errors %}
               <small class="form-text text-danger">{{x.nameError}}</small>

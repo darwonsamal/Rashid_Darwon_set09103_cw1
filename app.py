@@ -15,6 +15,7 @@ app.secret_key = os.urandom(12)
 pageNumber = 0
 currentFileName =""
 
+
 data = json.load(open("data/data.json"))
 
 files = json.load(open("data/files.json"))
@@ -27,9 +28,11 @@ def root():
     else:
         print("you are logged in")
         login = True
+
+    
     return render_template('index.html', login = login, background = url_for('static', filename = 'images/wucover3X.jpg'))
 
-@app.route('/meettheclan/')
+@app.route('/artists/')
 def meettheclan():
 
     artists = data['Artists']
@@ -44,15 +47,38 @@ def meettheclan():
         "genre": artist.get('genre'), "clanPhoto" : artist.get('clanPhoto'),
         "clanDescription" : artist.get('clanDescription'),
         "dateOfBirth": artist.get('dateOfBirth') }
+
         returnArtists.append(returnArtist)
 
-    print(returnArtists)
+    
 
-    return render_template('meettheclan.html', background = url_for('static', filename = 'images/wucover3X.jpg'), artist = returnArtists)
+    return render_template('meettheclan.html', background = url_for('static', filename = 'images/wucover3X.jpg'), artist = returnArtists, check = False)
 
 @app.route('/albums/')
 def albums():
-    print()
+
+        artists = data['Artists']
+
+        returnAlbums = []
+
+        for x in artists:
+            artist = artists[x]
+
+
+
+
+            for y in artist.get('albums'):
+
+                print(y)
+                returnAlbum = {"albumCover": y.get('albumCover'), "name" : y.get('name'),
+                "releaseDate": y.get('releaseDate'),
+                "executiveProducer": y.get('executiveProducer'),
+                "albumLength": y.get('albumLength'),
+                "albumDescription":y.get('albumDescription') }
+
+                returnAlbums.append(returnAlbum)
+
+        return render_template('meettheclan.html', background = url_for('static', filename = 'images/wucover3X.jpg'), albums = returnAlbums, check = True)
 
 
 @app.route('/login', methods = ['POST', 'GET'])
@@ -70,12 +96,12 @@ def login():
     if request.method == 'POST':
 
 
-        if request.form['password'] != '1234':
+        if request.form['password'] != app.config['password']:
             error = {"passwordError": "Incorrect password"}
             errors.append(error)
             errorFlag = True
 
-        if request.form['name'] != 'admin':
+        if request.form['name'] != app.config['admin']:
             error = {"nameError": "Incorrect username"}
             errors.append(error)
             errorFlag = True
@@ -123,8 +149,7 @@ def deleteComment():
 
             json.dump(comments, outfile)
 
-        return render_template('forum.html', comments = comments, pageNumber = session['pageNumber'], maxPageNumber = len(files), height = "100px")
-
+        return render_template('forum.html', comments = comments, pageNumber = session['pageNumber'], minPageNumber = session['minPageNumber'], maxPageNumber = session['maxPageNumber'], height = "100px")
 
 
 def generateID(fileName):
@@ -159,66 +184,116 @@ def deletePage():
 
         for x in files:
 
-            if pageNumber != 1:
-                print("entered")
+            startingPage = getStartingPage()
+
+            if pageNumber != startingPage:
+                
 
                 if x == str(pageNumber):
-                    print("enetered   2222")
+                 
+                    
                     files.pop(x)
                     os.remove(fileName)
+                    with open("data/files.json", 'w', encoding='utf8') as outfile:
+
+                        json.dump(files, outfile)
+
                     break
 
 
-    return redirect('/forum')
+        session['pageNumber'] = getStartingPage()
 
+        minPageNumber  = session['pageNumber']
 
+        maxPageNumber = getMaxPageNumber()
 
+        pageNumber = session['pageNumber']
 
+        session['minPageNumber'] = minPageNumber
+        session['maxPageNumber'] = maxPageNumber
 
+        data, session['currentFileName'] = getCommentsAndFileName(str(pageNumber))
+
+     
+
+        sortedComments = {}
+
+        sortedComments = sortDictionary(data)
+
+        return render_template('forum.html', comments = sortedComments, pageNumber = pageNumber, maxPageNumber = maxPageNumber, height = "100px", minPageNumber = minPageNumber)
 
 @app.route('/nextPage', methods = ['POST'])
 def nextPage():
 
     pageNumber = session['pageNumber']
+    #print(pageNumber)
 
-    print(pageNumber)
+    next = False
 
-    if pageNumber != len(files):
+    if pageNumber != session['maxPageNumber']:
 
 
-        pageNumber+=1
+        for x in files:
 
-        session['pageNumber'] = pageNumber
+            tempID = int(x)
 
-        comments, session['fileName'] = getCommentsAndFileName(str(pageNumber))
+
+            if next:
+
+                break
+
+            if tempID == pageNumber:
+                next = True
+
+
+
+        session['pageNumber'] = tempID
+
+
+        print(session['pageNumber'])
+       
+
+        comments, session['currentFileName'] = getCommentsAndFileName(str(tempID))
 
         comments = sortDictionary(comments)
 
-        return render_template('forum.html', comments = comments,  pageNumber = pageNumber, maxPageNumber = len(files))
-
+        return render_template('forum.html', comments = comments,  pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
 
 
 @app.route('/previoustPage', methods = ['POST'])
 def previousPage():
 
     pageNumber = session['pageNumber']
+    #print(pageNumber)
 
-    print(pageNumber)
+    
 
-    if pageNumber > 1:
+    tempPrev = 0
+    tempID = 0
 
-        pageNumber-=1
+    if pageNumber != session['minPageNumber']:
 
-        session['pageNumber'] = pageNumber
+        for x in files:
+            print("eeeee")
 
-        comments, session['fileName'] = getCommentsAndFileName(str(pageNumber))
+            tempPrev = tempID
+            tempID = int(x)
 
-        comments = sortDictionary(comments)
+            
 
-        return render_template('forum.html', comments = comments,  pageNumber = pageNumber, maxPageNumber = len(files))
+            if tempID == pageNumber:
+                tempID = tempPrev
+                break
+    
+        session['pageNumber'] = tempID
 
+   # print(tempID)
 
+    comments, session['currentFileName'] = getCommentsAndFileName(str(tempID))
 
+    comments = sortDictionary(comments)
+    
+    return render_template('forum.html', comments = comments,  pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
 
 
 def getCommentsAndFileName(pageNumber):
@@ -239,8 +314,6 @@ def getCommentsAndFileName(pageNumber):
             comments = json.load(open(fileName))
 
             return comments, fileName
-
-
 
 
 def sortDictionary(comments):
@@ -274,109 +347,165 @@ def sortDictionary(comments):
     return sortedComments
 
 
+def getStartingPage():
+
+    min = 5000
+    for x in files:
+
+        tempID = int(x)
+        #print(tempID)
 
 
-@app.route('/forum/', methods=['POST', 'GET'])
-def forum():
 
-    errors = []
+        if tempID < min:
+            
+            min = tempID
 
-    errorFlag = False
 
+    return min
+
+
+def getMaxPageNumber():
+     max = 0
+
+     for x in files:
+
+         tempID = int(x)
+
+
+         if tempID > max:
+             max = tempID
+
+     return max
+
+
+@app.route('/forumPost/', methods= ['POST'])
+def forumPost():
 
     if request.method == 'POST':
 
-            name = request.form['name']
-            message = request.form['message']
+        errors = []
 
-            print(session['pageNumber'])
+        errorFlag = False
 
-            data, session['currentFileName'] = getCommentsAndFileName(str(session['pageNumber']))
-
-            currentFileName = session['currentFileName']
-
-            sortedComments = {}
-
-            sortedComments = sortDictionary(data)
-
-            if name == "":
-                error = {"nameError": "Please provide a name."}
-                errors.append(error)
-                errorFlag = True
-
-            if message == "":
-                error = {"messageError": "Please provide a message."}
-                errors.append(error)
-                errorFlag = True
-
-            if errorFlag == True:
-                return render_template('forum.html', errors = errors, comments = sortedComments,  pageNumber = session['pageNumber'], maxPageNumber = len(files)
-                , height = "100px")
-
-            today = str(date.today())
+        name = request.form['name']
+        message = request.form['message']
 
 
+        print("TTTT")
+        print(session['pageNumber'])
 
-            comment = {
-            generateID(currentFileName): { "name": name, "message": message, "date" : today
-            }}
+        data, session['currentFileName'] = getCommentsAndFileName(str(session['pageNumber']))
 
-
-
-            if len(sortedComments) > 5:
-
-                print("Entered")
-
-                id = generateID("data/files.json")
-
-                today = today.replace('-', '')
-
-                fileName = today + id
-                file = {id : {"fileName" : fileName }}
-
-                fileName = "data/" + fileName +".json"
-
-                files.update(file)
-                with open("data/files.json", 'w', encoding='utf8') as outfile:
-
-                    json.dump(files, outfile)
-
-                with open(fileName, "w", encoding='utf8') as file:
-
-                    json.dump(comment, file)
-
-                return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'], maxPageNumber = len(files), height = "100px")
-
-
-
-            else:
-
-                sortedComments.update(comment)
-
-                sortedComments = sortDictionary(sortedComments)
-
-                with open(currentFileName, 'w', encoding='utf8') as outfile:
-
-                    json.dump(sortedComments, outfile)
-
-                return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'], maxPageNumber = len(files), height = "100px")
-
-    else:
-
-        session['pageNumber'] = 1
-
-        pageNumber = session['pageNumber']
-
-        data, session['currentFileName'] = getCommentsAndFileName(str(pageNumber))
+        currentFileName = session['currentFileName']
 
         sortedComments = {}
 
         sortedComments = sortDictionary(data)
 
-        print(len(files))
+        if name == "":
+            error = {"nameError": "Please provide a name."}
+            errors.append(error)
+            errorFlag = True
+
+        if message == "":
+            error = {"messageError": "Please provide a message."}
+            errors.append(error)
+            errorFlag = True
+
+        if errorFlag == True:
+            return render_template('forum.html', errors = errors, comments = sortedComments,  pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], 
+            minPageNumber = session['minPageNumber']
+            , height = "100px")
+
+        today = str(date.today())
 
 
-        return render_template('forum.html', comments = sortedComments, pageNumber = pageNumber, maxPageNumber = len(files), height = "100px")
+
+        comment = {
+        generateID(currentFileName): { "name": name, "message": message, "date" : today
+        }}
+
+
+
+        if len(sortedComments) > 3:
+
+            print("Entered")
+
+            id = generateID("data/files.json")
+
+            today = today.replace('-', '')
+
+            fileName = today + id
+            file = {id : {"fileName" : fileName }}
+
+            fileName = "data/" + fileName +".json"
+
+            files.update(file)
+            with open("data/files.json", 'w', encoding='utf8') as outfile:
+
+                json.dump(files, outfile)
+
+            with open(fileName, "w", encoding='utf8') as file:
+
+                json.dump(comment, file)
+
+            maxPageNumber = getMaxPageNumber()
+            minPageNumber = getStartingPage()
+
+            session['maxPageNumber'] = maxPageNumber
+            session['minPageNumber'] = minPageNumber
+
+           
+
+            return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'],  maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
+
+
+
+        else:
+
+            sortedComments.update(comment)
+
+            sortedComments = sortDictionary(sortedComments)
+
+            with open(currentFileName, 'w', encoding='utf8') as outfile:
+
+                json.dump(sortedComments, outfile)
+
+
+            session['pageNumber'] = session['pageNumber']
+            print(session['pageNumber'])
+            print("VVVVVV")
+
+            return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
+
+
+@app.route('/forum/', methods=['GET'])
+def forum():
+
+    if request.method == 'GET':
+
+        
+            session['pageNumber'] = getStartingPage()
+
+            minPageNumber  = session['pageNumber']
+
+            maxPageNumber = getMaxPageNumber()
+
+            pageNumber = session['pageNumber']
+
+            session['minPageNumber'] = minPageNumber
+            session['maxPageNumber'] = maxPageNumber
+
+            data, session['currentFileName'] = getCommentsAndFileName(str(pageNumber))
+
+            print("ENETETETETETETETTE")
+
+            sortedComments = {}
+
+            sortedComments = sortDictionary(data)
+
+            return render_template('forum.html', comments = sortedComments, pageNumber = pageNumber, maxPageNumber = maxPageNumber, height = "100px", minPageNumber = minPageNumber)
 
 
 @app.route('/artist/<artistName>')
@@ -396,15 +525,21 @@ def showArtist(artistName):
             returnArtist = {"name": artist.get('name'),
             "genre": artist.get('genre'), "clanPhoto" : artist.get('clanPhoto'),
             "clanDescription" : artist.get('clanDescription'),
-            "dateOfBirth": artist.get('dateOfBirth') }
+            "dateOfBirth": artist.get('dateOfBirth'), 
+            "artistBio" : artist.get('artistBio') }
             returnArtists.append(returnArtist)
 
 
             for y in artist.get('albums'):
-                returnAlbum = {"albumCover": y.get('albumCover'), "name" : y.get('name'),
+
+                returnAlbum = {"albumCover": y.get('albumCover'), 
+                "name" : y.get('name'),
+                "artistName": y.get('artistName'),
                 "releaseDate": y.get('releaseDate'),
                 "executiveProducer": y.get('executiveProducer'),
-                "albumLength": y.get('albumLength') }
+                "albumLength": y.get('albumLength'),
+                "albumDescription" : y.get('albumDescription'),
+                "albumBio" : y.get('albumBio')}
 
                 returnAlbums.append(returnAlbum)
 
@@ -416,27 +551,41 @@ def showArtist(artistName):
 def showAlbum(albumName):
     artists = data['Artists']
 
+   
+    print(albumName)
+    print("album name")
+
     returnAlbums = []
 
     for x in artists:
         artist = artists[x]
 
+        print(artist)
+        
+
         for y in artist.get('albums'):
 
+            print(y.get('name').lower())
             if y.get('name').lower() == albumName.lower():
+                print("EEEEEEEENETEREED")
 
                 returnAlbum = {"albumCover": y.get('albumCover'), "name" : y.get('name'),
                 "releaseDate": y.get('releaseDate'),
+                "artistName" : y.get('artistName'),
                 "executiveProducer": y.get('executiveProducer'),
-                "albumLength": y.get('albumLength') }
+                "albumLength": y.get('albumLength'),
+                "albumDescription" : y.get('albumDescription'),
+                "albumBio" : y.get('albumBio')}
 
                 returnAlbums.append(returnAlbum)
+                break
 
 
-        return render_template('showAlbum.html', albums = returnAlbums, height = "100px")
+    return render_template('showAlbum.html', albums = returnAlbums, height = "100px")
 
     # check to see if it is either artist name or date of birth or genre
     # if variable check is true it means it is the above mentioned
+
 
 @app.route('/<searchItem1>/<searchItem2>')
 def showResults(searchItem1, searchItem2):
@@ -448,7 +597,7 @@ def showResults(searchItem1, searchItem2):
     for x in artists:
         artist = artists[x]
 
-        getAlbums = artist.get('albums')
+        
 
         #check to see if user typed artist name, date of birth, and genre
         if searchItem1.lower() == x or searchItem1 == artist.get('dateOfBirth') or searchItem1 == artist.get('genre'):
@@ -459,7 +608,8 @@ def showResults(searchItem1, searchItem2):
                     returnAlbum = {"name" : y.get('name'),
                     "releaseDate": y.get('releaseDate'),
                     "executiveProducer": y.get('executiveProducer'),
-                    "albumLength": y.get('albumLength') }
+                    "albumLength": y.get('albumLength'),
+                    "albumDescription": y.get('albumDescription') }
 
                     returnAlbums.append(returnAlbum)
 
@@ -467,20 +617,13 @@ def showResults(searchItem1, searchItem2):
                 #returnArtists.append(returnArtist)
     return render_template('showResults.html', artist = returnArtists, albums = returnAlbums, height = "100px")
 
+
 @app.route('/search/<search>')
 def showSearch(search):
 
     returnArtists = []
     returnAlbums = []
 
-    check = True
-
-    # check to see what search can bring up
-    #for x in data:
-    #    print(data[x]['GZA'].get('albums')[0]['artistName'])
-
-
-        #print(data[x])
     #First we check if it is an artist name or date of birth or genre
 
     artists = data['Artists']
@@ -492,8 +635,7 @@ def showSearch(search):
 
         getAlbums = artist.get('albums')
 
-
-
+        found = False
 
 
 
@@ -502,6 +644,8 @@ def showSearch(search):
 
             returnArtist = {"name": artist.get('name'),
             "genre": artist.get('genre'),
+            "clanPhoto" : artist.get('clanPhoto'),
+            "clanDescription" : artist.get('clanDescription'),
             "dateOfBirth": artist.get('dateOfBirth') }
 
 
@@ -512,29 +656,35 @@ def showSearch(search):
                 returnAlbum = {"artistName": y.get('artistName'),
                 "name":y.get('name'),
                 "releaseDate": y.get('releaseDate'),
+                "albumCover" : y.get('albumCover'),
                 "executiveProducer": y.get('executiveProducer'),
-                "albumLength": y.get('albumLength')}
+                "albumLength": y.get('albumLength'),
+                "albumDescription": y.get('albumDescription')}
 
                 returnAlbums.append(returnAlbum)
 
             returnArtists.append(returnArtist)
+            found = True
+
 
     # If not above, then the person is trying to find something album related
-        for y in artist.get('albums'):
+        if found == False:
+
+            for y in artist.get('albums'):
 
 
-            if search == y.get('name') or search == y.get('releaseDate') or search == y.get('executiveProducer') or search == y.get('albumLength'):
+                if search == y.get('name') or search == y.get('releaseDate') or search == y.get('executiveProducer') or search == y.get('albumLength'):
 
-                returnAlbum = {"name" : y.get('name'),
-                "releaseDate": y.get('releaseDate'),
-                "executiveProducer": y.get('executiveProducer'),
-                "albumLength": y.get('albumLength') }
+                    returnAlbum = {"name" : y.get('name'),
+                    "releaseDate": y.get('releaseDate'),
+                    "albumCover" : y.get('albumCover'),
+                    "executiveProducer": y.get('executiveProducer'),
+                    "albumLength": y.get('albumLength'),
+                    "albumDescription": y.get('albumDescription') }
 
-                returnAlbums.append(returnAlbum)
+                    returnAlbums.append(returnAlbum)
 
     return  render_template('showResults.html', artist = returnArtists, albums = returnAlbums, height = "100px")
-
-
 
 
 @app.route('/config')
@@ -547,6 +697,7 @@ def config():
 
     return '\t'.join(str)
 
+
 def init(app):
     config = configparser.ConfigParser()
     try:
@@ -557,6 +708,8 @@ def init(app):
         app.config['ip_address'] = config.get("config", "ip_address")
         app.config['port'] = config.get("config", "port")
         app.config['url'] = config.get("config", "url")
+        app.config['admin'] = config.get("config", "admin")
+        app.config['password'] = config.get("config", "password")
     except:
         print(str.append("Could not read configs from: " + config_location))
 
