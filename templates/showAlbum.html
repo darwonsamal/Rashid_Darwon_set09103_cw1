@@ -4,6 +4,11 @@
     <div style="background-color:black;color:Yellow;">
         <div class="container">
             <div class="row">
+
+                {% if albums|length == 0%}
+                    <h1>No Album Found with that name.</h1>
+                {% endif %}
+
                 {% for x in albums %}
                 <div class="col-sm-6 item" ><img class="img-fluid img-style" src="{{x.albumCover}}"></div>
 

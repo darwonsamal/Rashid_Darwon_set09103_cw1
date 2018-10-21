@@ -607,6 +607,7 @@ def showResults(searchItem1, searchItem2):
 
                 for y in artist.get('albums'):
                     returnAlbum = {"name" : y.get('name'),
+                    "albumCover" : y.get('albumCover'),
                     "releaseDate": y.get('releaseDate'),
                     "executiveProducer": y.get('executiveProducer'),
                     "albumLength": y.get('albumLength'),

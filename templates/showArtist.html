@@ -4,6 +4,11 @@
     <div style="background-color:black;color:Yellow;">
         <div class="container">
             <div class="row">
+
+                {% if artists|length == 0%}
+                    <h1>No Artist Found with that name.</h1>
+                {% endif %}
+
                 {%for x in artists %}
                 <div class="col-md-6"><img class="img-fluid img-style" src={{x.clanPhoto}}></div>
                 <div class="col-md-6">
@@ -20,9 +25,12 @@
     </div>
     <div class="projects-clean" style="background-color:rgb(6,6,6);">
         <div class="container">
+            
+            {% if artists|length != 0%}
             <div class="intro">
                 <h2 class="text-center" style="color:yellow;">Albums</h2>
             </div>
+            {% endif %}
             <div class="row projects" style="color:Yellow;">
               {% for x in albums %}
                 <div class="col-sm-6 col-lg-4 item"><img class="img-fluid img-style" src={{x.albumCover}}>
