@@ -1,5 +1,4 @@
 import configparser
-import Artist
 import codecs
 from flask import *
 import json
@@ -697,6 +696,12 @@ def config():
 
     return '\t'.join(str)
 
+
+
+@app.errorhandler(404)
+def error(error):
+    return render_template('error.html')
+    
 
 def init(app):
     config = configparser.ConfigParser()
