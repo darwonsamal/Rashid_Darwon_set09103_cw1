@@ -38,18 +38,13 @@ def generateID(fileName):
 
 def getCommentsAndFileName(pageNumber):
 
-    tupleList = []
-
     for x in files:
 
         tempID = x
 
-
         if pageNumber == tempID:
 
-
             fileName = "data/" + files[x]['fileName'] + ".json"
-
 
             comments = json.load(open(fileName))
 
@@ -61,14 +56,10 @@ def sortDictionary(comments):
 
     for x in comments:
 
-
         tempDate = int(comments[x]['date'].replace('-', ''))
         tempID = x
 
-
         tupleList.append((tempID, tempDate))
-
-
 
     tupleList = sorted(tupleList, key= itemgetter(1), reverse = True)
 
@@ -93,9 +84,6 @@ def getStartingPage():
     for x in files:
 
         tempID = int(x)
-        
-
-
 
         if tempID < min:
             
@@ -111,7 +99,6 @@ def getMaxPageNumber():
      for x in files:
 
          tempID = int(x)
-
 
          if tempID > max:
              max = tempID
@@ -166,12 +153,9 @@ def albums():
         for x in artists:
             artist = artists[x]
 
-
-
-
             for y in artist.get('albums'):
 
-                print(y)
+                
                 returnAlbum = {"albumCover": y.get('albumCover'), "name" : y.get('name'),
                 "releaseDate": y.get('releaseDate'),
                 "executiveProducer": y.get('executiveProducer'),
@@ -188,7 +172,6 @@ def login():
 
     errors = []
 
-
     errorFlag = False
 
     if request.method == 'GET':
@@ -197,8 +180,34 @@ def login():
 
     if request.method == 'POST':
 
-        print(app.config['password'])
+       
+        if request.form['password'] != "1234":
+            error = {"passwordError": "Incorrect password"}
+            errors.append(error)
+            errorFlag = True
 
+        if request.form['name'] != "admin":
+            error = {"nameError": "Incorrect username"}
+            errors.append(error)
+            errorFlag = True
+
+        if errorFlag == True:
+            return render_template('login.html', errors = errors)
+
+        if request.form['password'] ==  "1234" and request.form['name'] == "admin":
+            session['logged_in'] = True
+
+            return redirect('/')
+
+
+
+
+
+    """
+
+    if request.method == 'POST':
+
+       
         if request.form['password'] != app.config['password']:
             error = {"passwordError": "Incorrect password"}
             errors.append(error)
@@ -212,13 +221,11 @@ def login():
         if errorFlag == True:
             return render_template('login.html', errors = errors)
 
-
-
         if request.form['password'] ==  app.config['password'] and request.form['name'] == app.config['admin']:
             session['logged_in'] = True
 
             return redirect('/')
-
+    """
 
 @app.route('/logout')
 def logout():
@@ -232,8 +239,6 @@ def deleteComment():
     data = json.load(open(session['currentFileName']))
 
     comments = data
-
-
 
     if request.method == 'POST':
         commentID = request.form.get('deleteComment')
@@ -285,7 +290,6 @@ def deletePage():
 
                     break
 
-
         session['pageNumber'] = getStartingPage()
 
         minPageNumber  = session['pageNumber']
@@ -310,12 +314,10 @@ def deletePage():
 def nextPage():
 
     pageNumber = session['pageNumber']
-    #print(pageNumber)
-
+    
     next = False
 
     if pageNumber != session['maxPageNumber']:
-
 
         for x in files:
 
@@ -329,13 +331,7 @@ def nextPage():
             if tempID == pageNumber:
                 next = True
 
-
-
-        session['pageNumber'] = tempID
-
-
-        print(session['pageNumber'])
-       
+        session['pageNumber'] = tempID    
 
         comments, session['currentFileName'] = getCommentsAndFileName(str(tempID))
 
@@ -347,10 +343,7 @@ def nextPage():
 @app.route('/previoustPage', methods = ['POST'])
 def previousPage():
 
-    pageNumber = session['pageNumber']
-    #print(pageNumber)
-
-    
+    pageNumber = session['pageNumber']   
 
     tempPrev = 0
     tempID = 0
@@ -358,12 +351,9 @@ def previousPage():
     if pageNumber != session['minPageNumber']:
 
         for x in files:
-            print("eeeee")
-
+            
             tempPrev = tempID
             tempID = int(x)
-
-            
 
             if tempID == pageNumber:
                 tempID = tempPrev
@@ -371,7 +361,6 @@ def previousPage():
     
         session['pageNumber'] = tempID
 
-   # print(tempID)
 
     comments, session['currentFileName'] = getCommentsAndFileName(str(tempID))
 
@@ -390,12 +379,9 @@ def forumPost():
         errorFlag = False
 
         name = request.form['name']
+
         message = request.form['message']
-
-
-        print("TTTT")
-        print(session['pageNumber'])
-
+       
         data, session['currentFileName'] = getCommentsAndFileName(str(session['pageNumber']))
 
         currentFileName = session['currentFileName']
@@ -421,17 +407,12 @@ def forumPost():
 
         today = str(date.today())
 
-
-
         comment = {
         generateID(currentFileName): { "name": name, "message": message, "date" : today
         }}
 
 
-
-        if len(sortedComments) > 3:
-
-            print("Entered")
+        if len(sortedComments) > 3:          
 
             id = generateID("data/files.json")
 
@@ -452,15 +433,14 @@ def forumPost():
                 json.dump(comment, file)
 
             maxPageNumber = getMaxPageNumber()
+
             minPageNumber = getStartingPage()
 
             session['maxPageNumber'] = maxPageNumber
+
             session['minPageNumber'] = minPageNumber
 
-           
-
             return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'],  maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
-
 
 
         else:
@@ -475,9 +455,7 @@ def forumPost():
 
 
             session['pageNumber'] = session['pageNumber']
-            print(session['pageNumber'])
-            print("VVVVVV")
-
+        
             return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
 
 
@@ -485,8 +463,7 @@ def forumPost():
 def forum():
 
     if request.method == 'GET':
-
-        
+     
             session['pageNumber'] = getStartingPage()
 
             minPageNumber  = session['pageNumber']
@@ -496,11 +473,10 @@ def forum():
             pageNumber = session['pageNumber']
 
             session['minPageNumber'] = minPageNumber
+
             session['maxPageNumber'] = maxPageNumber
 
             data, session['currentFileName'] = getCommentsAndFileName(str(pageNumber))
-
-            print("ENETETETETETETETTE")
 
             sortedComments = {}
 
@@ -512,7 +488,6 @@ def forum():
 @app.route('/artist/<artistName>')
 def showArtist(artistName):
     artists = data['Artists']
-
 
     returnArtists = []
     returnAlbums = []
@@ -530,7 +505,6 @@ def showArtist(artistName):
             "artistBio" : artist.get('artistBio') }
             returnArtists.append(returnArtist)
 
-
             for y in artist.get('albums'):
 
                 returnAlbum = {"albumCover": y.get('albumCover'), 
@@ -544,31 +518,23 @@ def showArtist(artistName):
 
                 returnAlbums.append(returnAlbum)
 
-
     return render_template('showArtist.html', artists = returnArtists, albums = returnAlbums, height = "100px")
 
 
 @app.route('/album/<albumName>')
 def showAlbum(albumName):
     artists = data['Artists']
-
-   
-    print(albumName)
-    print("album name")
-
+ 
     returnAlbums = []
 
     for x in artists:
         artist = artists[x]
 
-        print(artist)
-        
-
         for y in artist.get('albums'):
 
-            print(y.get('name').lower())
+           
             if y.get('name').lower() == albumName.lower():
-                print("EEEEEEEENETEREED")
+              
 
                 returnAlbum = {"albumCover": y.get('albumCover'), "name" : y.get('name'),
                 "releaseDate": y.get('releaseDate'),
@@ -597,8 +563,6 @@ def showResults(searchItem1, searchItem2):
 
     for x in artists:
         artist = artists[x]
-
-        
 
         #check to see if user typed artist name, date of birth, and genre
         if searchItem1.lower() == x or searchItem1 == artist.get('dateOfBirth') or searchItem1 == artist.get('genre'):
@@ -637,13 +601,9 @@ def searchPost():
         for x in artists:
             artist = artists[x]
 
-
-
             getAlbums = artist.get('albums')
 
             found = False
-
-
 
             #check to see if user typed artist name, date of birth, and genre
             if search.lower() == x or search == artist.get('dateOfBirth') or search == artist.get('genre'):
@@ -653,9 +613,6 @@ def searchPost():
                 "clanPhoto" : artist.get('clanPhoto'),
                 "clanDescription" : artist.get('clanDescription'),
                 "dateOfBirth": artist.get('dateOfBirth') }
-
-
-
 
                 for y in getAlbums:
 
@@ -671,7 +628,6 @@ def searchPost():
 
                 returnArtists.append(returnArtist)
                 found = True
-
 
         # If not above, then the person is trying to find something album related
             if found == False:
