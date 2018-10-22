@@ -253,7 +253,7 @@ def deleteComment():
         comments = sortDictionary(comments)
 
 
-        with open(session['currentFileName'], 'w', encoding='utf8') as outfile:
+        with open(session['currentFileName'], 'w') as outfile:
 
             json.dump(comments, outfile)
 
@@ -284,7 +284,7 @@ def deletePage():
                     
                     files.pop(x)
                     os.remove(fileName)
-                    with open("data/files.json", 'w', encoding='utf8') as outfile:
+                    with open("data/files.json", 'w') as outfile:
 
                         json.dump(files, outfile)
 
@@ -424,11 +424,11 @@ def forumPost():
             fileName = "data/" + fileName +".json"
 
             files.update(file)
-            with open("data/files.json", 'w', encoding='utf8') as outfile:
+            with open("data/files.json", 'w') as outfile:
 
                 json.dump(files, outfile)
 
-            with open(fileName, "w", encoding='utf8') as file:
+            with open(fileName, "w") as file:
 
                 json.dump(comment, file)
 
@@ -449,7 +449,7 @@ def forumPost():
 
             sortedComments = sortDictionary(sortedComments)
 
-            with open(currentFileName, 'w', encoding='utf8') as outfile:
+            with open(currentFileName, 'w') as outfile:
 
                 json.dump(sortedComments, outfile)
 
