@@ -411,7 +411,6 @@ def forumPost():
         generateID(currentFileName): { "name": name, "message": message, "date" : today
         }}
 
-
         if len(sortedComments) > 3:          
 
             id = generateID("data/files.json")
