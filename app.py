@@ -1,4 +1,4 @@
-import configparser
+import ConfigParser
 import codecs
 from flask import *
 import json
@@ -10,6 +10,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
+
 
 pageNumber = 0
 currentFileName =""
@@ -35,6 +36,7 @@ def generateID(fileName):
 
     max+=1
     return str(max)
+
 
 def getCommentsAndFileName(pageNumber):
 
@@ -78,33 +80,56 @@ def sortDictionary(comments):
     return sortedComments
 
 
+def reverseFiles():
+    filesList = []
+    for x in files:
+        
+        tempID = x
+        tempDate = int(files[x]['fileName'])
+
+        print(tempID)
+        filesList.append((tempID, tempDate))
+
+    filesList = sorted(filesList, key = itemgetter(1), reverse = True)
+
+    sortedFiles = {}
+    for x in filesList:
+        
+        for y in files:
+
+            if x[0] == y:
+
+                file = {y : {"fileName": files[y]['fileName']}}
+                
+                sortedFiles.update(file)
+                
+    with open("data/files.json", 'w') as outfile:
+
+        json.dump(sortedFiles, outfile)
+
+    
 def getStartingPage():
 
-    min = 5000
+    min = 0
     for x in files:
 
         tempID = int(x)
 
-        if tempID < min:
-            
-            min = tempID
+        min = tempID
+        break
 
 
     return min
 
 
 def getMaxPageNumber():
-     max = 0
 
-     for x in files:
+    for x in files:
 
-         tempID = int(x)
+        tempID = int(x)
 
-         if tempID > max:
-             max = tempID
 
-     return max
-
+    return tempID
 
 # ROUTES
 @app.route('/')
@@ -116,7 +141,6 @@ def root():
         print("you are logged in")
         login = True
 
-    
     return render_template('index.html', login = login, background = url_for('static', filename = 'images/wucover3X.jpg'))
 
 
@@ -180,13 +204,17 @@ def login():
 
     if request.method == 'POST':
 
-       
-        if request.form['password'] != "1234":
+        for x in app.config:
+
+            print(x)
+
+
+        if request.form['password'] != app.config["PASSWORD"]:
             error = {"passwordError": "Incorrect password"}
             errors.append(error)
             errorFlag = True
 
-        if request.form['name'] != "admin":
+        if request.form['name'] != app.config["ADMIN"]:
             error = {"nameError": "Incorrect username"}
             errors.append(error)
             errorFlag = True
@@ -194,7 +222,7 @@ def login():
         if errorFlag == True:
             return render_template('login.html', errors = errors)
 
-        if request.form['password'] ==  "1234" and request.form['name'] == "admin":
+        if request.form['password'] ==  app.config['PASSWORD'] and request.form['name'] == app.config['ADMIN']:
             session['logged_in'] = True
 
             return redirect('/')
@@ -290,6 +318,8 @@ def deletePage():
 
                     break
 
+        reverseFiles()
+
         session['pageNumber'] = getStartingPage()
 
         minPageNumber  = session['pageNumber']
@@ -314,17 +344,23 @@ def deletePage():
 def nextPage():
 
     pageNumber = session['pageNumber']
+    print("PAGE NUMBER")
+    print(pageNumber)
+
+    reverseFiles()
     
     next = False
 
     if pageNumber != session['maxPageNumber']:
+        print("Entered here")
 
         for x in files:
 
             tempID = int(x)
-
+            print(tempID)
 
             if next:
+                print(" NEXT PAGE NUMBER")
                 print(tempID)
                 break
 
@@ -340,7 +376,7 @@ def nextPage():
         return render_template('forum.html', comments = comments,  pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
 
 
-@app.route('/previoustPage', methods = ['POST'])
+@app.route('/previousPage', methods = ['POST'])
 def previousPage():
 
     pageNumber = session['pageNumber']   
@@ -348,15 +384,21 @@ def previousPage():
     tempPrev = 0
     tempID = 0
 
+    reverseFiles()
+
     if pageNumber != session['minPageNumber']:
 
         for x in files:
             
             tempPrev = tempID
             tempID = int(x)
+            print(tempID)
 
             if tempID == pageNumber:
                 tempID = tempPrev
+                print("previous")
+                print(tempID)
+                
                 break
     
         session['pageNumber'] = tempID
@@ -439,6 +481,8 @@ def forumPost():
 
             session['minPageNumber'] = minPageNumber
 
+            reverseFiles()
+
             return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'],  maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
 
 
@@ -454,7 +498,9 @@ def forumPost():
 
 
             session['pageNumber'] = session['pageNumber']
-        
+
+            reverseFiles()
+
             return render_template('forum.html', comments = sortedComments, pageNumber = session['pageNumber'], maxPageNumber = session['maxPageNumber'], minPageNumber = session['minPageNumber'], height = "100px")
 
 
@@ -462,8 +508,15 @@ def forumPost():
 def forum():
 
     if request.method == 'GET':
+
+            reverseFiles()
      
             session['pageNumber'] = getStartingPage()
+
+            print(session['pageNumber'])
+
+            for x in files:
+                print(x)
 
             minPageNumber  = session['pageNumber']
 
@@ -723,7 +776,7 @@ def error(error):
     
 
 def init(app):
-    config = configparser.ConfigParser()
+    config = ConfigParser.ConfigParser()
     try:
         config_location = "etc/defaults.cfg"
         config.read(config_location)
@@ -732,14 +785,16 @@ def init(app):
         app.config['ip_address'] = config.get("config", "ip_address")
         app.config['port'] = config.get("config", "port")
         app.config['url'] = config.get("config", "url")
-        app.config['admin'] = config.get("config", "admin")
-        app.config['password'] = config.get("config", "password")
+        app.config['ADMIN'] = config.get("config", "ADMIN")
+        app.config['PASSWORD'] = config.get("config", "PASSWORD")
+
     except:
         print(str.append("Could not read configs from: " + config_location))
 
+init(app)
+
+
 
 if __name__ == '__main__':
-    init(app)
-    app.run(
-    host = app.config['ip_address'],
-    port = int(app.config['port']))
+    app.run(host = '0.0.0.0', debug = True)
+   
